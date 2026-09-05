@@ -33,20 +33,24 @@ const App = () => {
 
   const handleVoteClick = () => {
     console.log('values before click',anecdotes[selected])
-    // Here you would implement the logic to handle voting for the selected anecdote.
-    // This could involve updating a state variable that keeps track of votes for each anecdote.
-  }
+    const copy = [...votes]
+    copy[selected] += 1
+    setVotes(copy)
+}
 
   return (
     
     <div>
-      <p>
-        {anecdotes[selected]}
-        
+        <h1>Anecdote of the day</h1>
+        <p>
+            {anecdotes[selected]}
+        </p>
+        <p>
+            has {votes[selected]} votes
+        </p>
         <br />
         <Button handleClick={handleVoteClick} text='vote' />
         <Button handleClick={handleAnecdoteClick} text='next anecdote' />
-      </p>
     </div>
   )
 }
