@@ -2,6 +2,14 @@
 
 import { useState } from 'react'
 
+const Button = (props) => {
+  return (
+    <button onClick={props.handleClick}>
+      {props.text}
+    </button>
+  )
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -15,10 +23,30 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
+
+  const handleAnecdoteClick = () => {
+    console.log('values before click',anecdotes[selected])
+    const randomIndex = Math.floor(Math.random() * anecdotes.length)
+    setSelected((randomIndex))
+  }
+
+  const handleVoteClick = () => {
+    console.log('values before click',anecdotes[selected])
+    // Here you would implement the logic to handle voting for the selected anecdote.
+    // This could involve updating a state variable that keeps track of votes for each anecdote.
+  }
 
   return (
+    
     <div>
-      {anecdotes[selected]}
+      <p>
+        {anecdotes[selected]}
+        
+        <br />
+        <Button handleClick={handleVoteClick} text='vote' />
+        <Button handleClick={handleAnecdoteClick} text='next anecdote' />
+      </p>
     </div>
   )
 }
