@@ -24,6 +24,8 @@ const App = () => {
    
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
+  const mostVotes = Math.max(...votes)
+  const mostVotesIndex = votes.indexOf(mostVotes)
 
   const handleAnecdoteClick = () => {
     console.log('values before click',anecdotes[selected])
@@ -51,6 +53,15 @@ const App = () => {
         <br />
         <Button handleClick={handleVoteClick} text='vote' />
         <Button handleClick={handleAnecdoteClick} text='next anecdote' />
+
+        <h2> Anecdotes with the most votes </h2>
+        {votes.reduce((a,b) => Math.max(a,b)) === 0 ?
+        <p>No votes yet</p> : 
+        <div>
+            <p>{anecdotes[mostVotesIndex]} 
+                <br/> has {mostVotes} votes </p>
+        </div>
+        }
     </div>
   )
 }
