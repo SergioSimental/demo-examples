@@ -1,69 +1,77 @@
-//Exercise 1.12-1.14
+/* Exercise 2.1: Course information
 
-import { useState } from 'react'
+Exercise 1.1 - 1.5: Course information
+  In this exercise you will create a simple React application that displays information about a course. The application will consist of several components that work together to display the course name, parts, and the total number of exercises.
 
-const Button = (props) => {
+  The main component is App, which contains the course information and renders the Header, Content, and Total components. The Header component displays the course name, the Content component displays the parts of the course, and the Total component calculates and displays the total number of exercises.
+*/
+
+const Course = (props) => {
   return (
-    <button onClick={props.handleClick}>
-      {props.text}
-    </button>
-  )
-}
-
-const App = () => {
-  const anecdotes = [
-    'If it hurts, do it more often.',
-    'Adding manpower to a late software project makes it later!',
-    'The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
-    'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
-    'Premature optimization is the root of all evil.',
-    'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
-    'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
-    'The only way to go fast, is to go well.'
-  ]
-   
-  const [selected, setSelected] = useState(0)
-  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
-  const mostVotes = Math.max(...votes)
-  const mostVotesIndex = votes.indexOf(mostVotes)
-
-  const handleAnecdoteClick = () => {
-    console.log('values before click',anecdotes[selected])
-    const randomIndex = Math.floor(Math.random() * anecdotes.length)
-    setSelected((randomIndex))
-  }
-
-  const handleVoteClick = () => {
-    console.log('values before click',anecdotes[selected])
-    const copy = [...votes]
-    copy[selected] += 1
-    setVotes(copy)
-}
-
-  return (
-    
     <div>
-        <h1>Anecdote of the day</h1>
-        <p>
-            {anecdotes[selected]}
-        </p>
-        <p>
-            has {votes[selected]} votes
-        </p>
-        <br />
-        <Button handleClick={handleVoteClick} text='vote' />
-        <Button handleClick={handleAnecdoteClick} text='next anecdote' />
-
-        <h2> Anecdotes with the most votes </h2>
-        {votes.reduce((a,b) => Math.max(a,b)) === 0 ?
-        <p>No votes yet</p> : 
-        <div>
-            <p>{anecdotes[mostVotesIndex]} 
-                <br/> has {mostVotes} votes </p>
-        </div>
-        }
+      <Header course={props.course.name} />
+      <Content parts={props.course.parts} />
+      <Total parts={props.course.parts} />
     </div>
   )
 }
 
-export default App
+const Header = (props) => {
+  return <h1>{props.course}</h1>
+}
+
+const Part = (props) => {
+  return (
+  <p>
+    {props.part.name} {props.part.exercises}
+  </p>
+  )
+}
+
+const Content = (props) => {
+  return (
+    <div>
+      <Part part={props.parts[0]}/>
+      <Part part={props.parts[1]}/>
+      <Part part={props.parts[2]}/>
+    </div>
+  )
+}
+
+const Total = (props) => {
+  return (
+    <p>
+      Number of exercises{' '}
+      {props.parts[0].exercises +
+       props.parts[1].exercises +
+       props.parts[2].exercises}
+    </p>
+  )
+}
+
+const App = () => {
+  const course = {
+    name: 'Half Stack application development',
+    parts: [
+      {
+        name: 'Fundamentals of React',
+        exercises: 10,
+        id: 1
+      },
+      {
+        name: 'Using props to pass data',
+        exercises: 7,
+        id: 2
+      },
+      {
+        name: 'State of a component',
+        exercises: 14,
+        id: 3
+      }
+    ]
+  }
+  return <Course course={course} />
+  
+}
+
+export default App /**/
