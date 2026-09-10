@@ -53,7 +53,8 @@ const Total = (props) => {
 
 
 const App = () => {
-  const course = {
+  const course = [
+    {
     name: 'Half Stack application development',
     parts: [
       {
@@ -75,11 +76,35 @@ const App = () => {
         name: 'Redux',
         exercises: 11,
         id: 4
-      }
+      },
     ]
-  }
-  return <Course course={course} />
-  
+  },
+  {
+      name: 'Node.js',
+      id: 2,
+      parts: 
+      [
+      {
+        name: 'Routing',
+        exercises: 3,
+        id: 1
+      },
+      {
+        name: 'Middlewares',
+        exercises: 7,
+        id: 2
+        }
+      ]
+    }  
+  ]
+
+  return(
+    <div>
+      {course.map(course =>
+        <Course key={course.name} course={course} />
+      )}
+    </div>
+  )
 }
 
 export default App 
