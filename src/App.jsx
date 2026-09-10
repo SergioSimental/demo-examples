@@ -1,168 +1,24 @@
-/* Exercise 2.1-2.5: Course information
-
-Exercise 1.1 - 1.5: Course information
-  In this exercise you will create a simple React application that displays information about a course. The application will consist of several components that work together to display the course name, parts, and the total number of exercises.
-
-  The main component is App, which contains the course information and renders the Header, Content, and Total components. The Header component displays the course name, the Content component displays the parts of the course, and the Total component calculates and displays the total number of exercises.
-
-
-const Course = (props) => {
-  return (
-    <div>
-      <Header course={props.course.name} />
-      <Content parts={props.course.parts} />
-      <Total parts={props.course.parts} />
-    </div>
-  )
-}
-
-const Header = (props) => {
-  return <h1>{props.course}</h1>
-}
-
-const Part = (props) => {
-  return (
-  <p>
-    {props.part.name} {props.part.exercises}
-  </p>
-  )
-}
-
-const Content = (props) => {
-  return (
-    <div>
-      {props.parts.map(part => 
-        <Part key={part.id} part={part} />
-      )}
-    </div>
-  )
-}
-
-const Total = (props) => {
-  const total = props.parts.reduce((sum, part) => {
-    return sum + part.exercises
-  }, 0)
-
-  return (
-    <p>
-      Number of exercises{' '}
-      {total}
-    </p>
-  )
-}
-
+import { useState } from 'react'
 
 const App = () => {
-  const course = [
-    {
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10,
-        id: 1
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7,
-        id: 2
-      },
-      {
-        name: 'State of a component',
-        exercises: 14,
-        id: 3
-      },
-      {
-        name: 'Redux',
-        exercises: 11,
-        id: 4
-      },
-    ]
-  },
-  {
-      name: 'Node.js',
-      id: 2,
-      parts: 
-      [
-      {
-        name: 'Routing',
-        exercises: 3,
-        id: 1
-      },
-      {
-        name: 'Middlewares',
-        exercises: 7,
-        id: 2
-        }
-      ]
-    }  
-  ]
+  const [persons, setPersons] = useState([
+    { name: 'Arto Hellas' }
+  ]) 
+  const [newName, setNewName] = useState('')
 
-  return(
-    <div>
-      {course.map(course =>
-        <Course key={course.name} course={course} />
-      )}
-    </div>
-  )
-}
-
-export default App */
-
-import Course from './Course'
-
-
-const App = () => {
-  const course = [
-    {
-      name: 'Half Stack application development',
-      id: 1,
-      parts: [
-        {
-          name: 'Fundamentals of React',
-          exercises: 10,
-          id: 1
-        },
-        {
-          name: 'Using props to pass data',
-          exercises: 7,
-          id: 2
-        },
-        {
-          name: 'State of a component',
-          exercises: 14,
-          id: 3
-        },
-        {
-          name: 'Redux',
-          exercises: 11,
-          id: 4
-        }
-      ]
-    },
-    {
-      name: 'Node.js',
-      id: 2,
-      parts: [
-        {
-          name: 'Routing',
-          exercises: 3,
-          id: 1
-        },
-        {
-          name: 'Middlewares',
-          exercises: 7,
-          id: 2
-        }
-      ]
-    }
-  ]
-  
   return (
     <div>
-      {course.map(course =>
-        <Course key={course.id} course={course} />
-      )}
+      <h2>Phonebook</h2>
+      <form>
+        <div>
+          name: <input />
+        </div>
+        <div>
+          <button type="submit">add</button>
+        </div>
+      </form>
+      <h2>Numbers</h2>
+      ...
     </div>
   )
 }
