@@ -39,15 +39,18 @@ const Content = (props) => {
 }
 
 const Total = (props) => {
+  const total = props.parts.reduce((sum, part) => {
+    return sum + part.exercises
+  }, 0)
+
   return (
     <p>
       Number of exercises{' '}
-      {props.parts[0].exercises +
-       props.parts[1].exercises +
-       props.parts[2].exercises}
+      {total}
     </p>
   )
 }
+
 
 const App = () => {
   const course = {
@@ -79,4 +82,4 @@ const App = () => {
   
 }
 
-export default App /**/
+export default App 
