@@ -1,10 +1,10 @@
-/* Exercise 2.1: Course information
+/* Exercise 2.1-2.5: Course information
 
 Exercise 1.1 - 1.5: Course information
   In this exercise you will create a simple React application that displays information about a course. The application will consist of several components that work together to display the course name, parts, and the total number of exercises.
 
   The main component is App, which contains the course information and renders the Header, Content, and Total components. The Header component displays the course name, the Content component displays the parts of the course, and the Total component calculates and displays the total number of exercises.
-*/
+
 
 const Course = (props) => {
   return (
@@ -107,4 +107,64 @@ const App = () => {
   )
 }
 
-export default App 
+export default App */
+
+import Course from './Course'
+
+
+const App = () => {
+  const course = [
+    {
+      name: 'Half Stack application development',
+      id: 1,
+      parts: [
+        {
+          name: 'Fundamentals of React',
+          exercises: 10,
+          id: 1
+        },
+        {
+          name: 'Using props to pass data',
+          exercises: 7,
+          id: 2
+        },
+        {
+          name: 'State of a component',
+          exercises: 14,
+          id: 3
+        },
+        {
+          name: 'Redux',
+          exercises: 11,
+          id: 4
+        }
+      ]
+    },
+    {
+      name: 'Node.js',
+      id: 2,
+      parts: [
+        {
+          name: 'Routing',
+          exercises: 3,
+          id: 1
+        },
+        {
+          name: 'Middlewares',
+          exercises: 7,
+          id: 2
+        }
+      ]
+    }
+  ]
+  
+  return (
+    <div>
+      {course.map(course =>
+        <Course key={course.id} course={course} />
+      )}
+    </div>
+  )
+}
+
+export default App
