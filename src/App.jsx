@@ -6,10 +6,16 @@ const App = () => {
     { name: 'Arto Hellas' }
   ]) 
   const [newName, setNewName] = useState('')
+  const [newNumber, setNewNumber] = useState('')
 
   const handleNameChange = (event) => {
     console.log(event.target.value)
     setNewName(event.target.value)
+  }
+
+    const handleNumberChange = (event) => {
+    console.log(event.target.value)
+    setNewNumber(event.target.value)
   }
 
   const addPerson = (event) => {
@@ -28,6 +34,24 @@ const App = () => {
 
     setPersons(persons.concat(personObject))
     setNewName('')
+  }
+
+  const addNumber = (event) => {
+    event.preventDefault()
+  
+    const numberExists = persons.some(person => person.number === newNumber)
+  
+    if (numberExists) {
+      alert(`${newNumber} is already added to phonebook`)
+      return
+    }
+
+    const personObject = {
+      number: newNumber
+    }
+
+    setPersons(persons.concat(personObject))
+    setNewNumber('')
   }
 
   return (
@@ -49,7 +73,6 @@ const App = () => {
           <p key={person.name}>{person.name}</p>
         )}
       </div>
-      {/* <div>debug: {newName}</div> */}
     </div>
   )
 }
