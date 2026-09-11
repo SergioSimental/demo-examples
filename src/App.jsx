@@ -15,6 +15,13 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault()
 
+    const nameExists = persons.some(person => person.name === newName)
+
+    if (nameExists) {
+      alert(`${newName} is already added to phonebook`)
+      return
+    }
+
     const personObject = {
       name: newName
     }
@@ -42,7 +49,7 @@ const App = () => {
           <p key={person.name}>{person.name}</p>
         )}
       </div>
-      <div>debug: {newName}</div>
+      {/* <div>debug: {newName}</div> */}
     </div>
   )
 }
