@@ -1,5 +1,5 @@
-import { useState } from 'react'
-
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 const Filter = ({filter, handleFilterChange}) => {
   return (
@@ -65,6 +65,16 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
 
+  const hook = () => {
+  axios
+    .get('http://localhost:3001/persons')
+    .then(response => {
+      setPersons(response.data)
+    })
+  }
+
+  useEffect(hook, [])
+
   const handleNameChange = (event) => {
     console.log(event.target.value)
     setNewName(event.target.value)
@@ -94,15 +104,30 @@ const App = () => {
       return
     }
 
-    const personObject = {
+  axios
+    .post('http://localhost:3001/persons', {
+      name: newName,
+      number: newNumber
+    })
+    .then(response => {
+      setPersons(persons.concat(response.data))
+      setNewName('')
+      setNewNumber('')
+    })
+    .catch(error => {
+      console.error('Error adding person:', error)
+    })
+  }
+
+    /*const personObject = {
       name: newName,
       number: newNumber
     }
 
     setPersons(persons.concat(personObject))
     setNewName('')
-    setNewNumber('')
-  }
+    setNewNumber('')*
+  }*/
 
   return (
     <div>
