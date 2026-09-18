@@ -34,20 +34,27 @@ const PersonForm = ({addPerson, newName, handleNameChange, newNumber, handleNumb
   )
 }
 
-const Person = ({person}) => {
+const Person = ({person, handleDelete}) => {
   return (
     <p>
       {person.name} {person.number}
+      <button onClick={() => handleDelete(person)}>
+        delete
+      </button>
     </p>
   )
 }
 
 
-const Persons = ({persons}) => {
+const Persons = ({persons, handleDelete}) => {
   return (
     <div>
       {persons.map(person => 
-        <Person key={person.id} person={person} />
+        <Person 
+          key={person.id} 
+          person={person} 
+          handleDelete={handleDelete}
+        />
       )}
     </div>
   )
@@ -98,6 +105,16 @@ const App = () => {
     setFilter(event.target.value)
   }
 
+  const handleDelete = (person) => {
+    if (window.confirm(`Delete ${person.name}?`)) {
+      personService
+        .remove(person.id)
+        .then(() => {
+          setPersons(persons.filter(p => p.id !== person.id))
+        })
+    }
+  }
+
   const personsToShow = persons.filter(person =>
      person.name.toLowerCase().includes(filter.toLowerCase())
   )  
@@ -112,7 +129,21 @@ const App = () => {
       return
     }
 
-  axios
+    const personObject = {
+      name: newName,
+      number: newNumber
+    }
+
+    personService
+      .create(personObject)
+      .then(response => {
+        setPersons(persons.concat(response.data))
+        setNewName('')
+        setNewNumber('')
+      })
+  }
+
+  /*axios
     .post('http://localhost:3001/persons', {
       name: newName,
       number: newNumber
@@ -125,7 +156,7 @@ const App = () => {
     .catch(error => {
       console.error('Error adding person:', error)
     })
-  }
+  }*/
 
     /*const personObject = {
       name: newName,
@@ -155,7 +186,10 @@ const App = () => {
       />
       
       <h3>Numbers</h3>
-      <Persons persons={personsToShow}/>
+      <Persons 
+        persons={personsToShow}
+        handleDelete={handleDelete}
+      />
     </div>
   )
 }
