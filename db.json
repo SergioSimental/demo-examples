@@ -19,6 +19,11 @@
       "name": "Mark Tucker",
       "number": "123-1234",
       "id": "pfFc4wnPaQ0"
+    },
+    {
+      "name": "Matt Barry",
+      "number": "912-213-9893",
+      "id": "rKEzM1bKWRI"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

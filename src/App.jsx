@@ -71,6 +71,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+  const [notification, setNotification] = useState('')
 
   /*const hook = () => {
   axios
@@ -89,6 +90,17 @@ const App = () => {
   }
 
   useEffect(hook, [])
+
+  const showNotification = (message, type = 'success') => {
+    setNotification({
+      message: message,
+      type: type
+    })
+    
+    setTimeout(() => {
+      setNotification('')
+    }, 5000)
+  }
 
   const handleNameChange = (event) => {
     console.log(event.target.value)
@@ -140,6 +152,13 @@ const App = () => {
         setPersons(persons.concat(response.data))
         setNewName('')
         setNewNumber('')
+        showNotification(`Added ${response.data.name}`, 'success')
+      })
+      .catch(error => {
+        showNotification(
+          `Information of ${person.name} has already been removed from server`,
+          'error' 
+        )
       })
   }
 
@@ -171,6 +190,12 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      {notification && (
+        <div className={notification.type}>
+          {notification.message}
+        </div>
+      )}
+
       <Filter 
         filter={filter} 
         handleFilterChange={handleFilterChange}
