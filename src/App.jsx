@@ -71,7 +71,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
-  const [notification, setNotification] = useState('')
+  const [notification, setNotification] = useState(null)
 
   /*const hook = () => {
   axios
@@ -98,7 +98,7 @@ const App = () => {
     })
     
     setTimeout(() => {
-      setNotification('')
+      setNotification(null)
     }, 5000)
   }
 
@@ -123,7 +123,14 @@ const App = () => {
         .remove(person.id)
         .then(() => {
           setPersons(persons.filter(p => p.id !== person.id))
+          showNotification(`Deleted ${person.name}`, 'success')
         })
+        .catch(error => {
+          showNotification(
+            `Information of ${person.name} has already been removed from server`,
+            'error' 
+        )
+      })
     }
   }
 
@@ -153,12 +160,6 @@ const App = () => {
         setNewName('')
         setNewNumber('')
         showNotification(`Added ${response.data.name}`, 'success')
-      })
-      .catch(error => {
-        showNotification(
-          `Information of ${person.name} has already been removed from server`,
-          'error' 
-        )
       })
   }
 
