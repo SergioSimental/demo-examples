@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import Country from './Country'
 
 
 const App = () => {
@@ -19,7 +20,7 @@ const App = () => {
     }
 
     const filteredCountries = countries.filter(country =>
-        country.name.common.toLowerCase().includes(search.toLocaleLowerCase())
+        country.name.common.toLowerCase().includes(search.toLowerCase())
     )
 
 
@@ -36,7 +37,7 @@ const App = () => {
                     <p key={country.cca3}>{country.name.common}</p>
                 ))
             ) : filteredCountries.length === 1 ? (
-                <p>{filteredCountries[0].name.common}</p>
+                <Country country={filteredCountries[0]} />
             ) : null}
         </div>
     )
