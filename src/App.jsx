@@ -34,19 +34,34 @@ const PersonForm = ({addPerson, newName, handleNameChange, newNumber, handleNumb
   )
 }
 
-const Person = ({person, handleDelete}) => {
+const Person = ({person, handleDelete, changeNumber}) => {
+  const handleChangeNumber = () => {
+    const newNumber = window.prompt(
+      `Enter new number for ${person.name}:`
+    )
+
+    if (newNumber) {
+      changeNumber(person.id, newNumber)
+    }
+  }
+  
   return (
     <p>
       {person.name} {person.number}
+
       <button onClick={() => handleDelete(person)}>
         delete
+      </button>
+
+      <button onClick={handleChangeNumber}>
+        change number
       </button>
     </p>
   )
 }
 
 
-const Persons = ({persons, handleDelete}) => {
+const Persons = ({persons, handleDelete, changeNumber}) => {
   return (
     <div>
       {persons.map(person => 
@@ -54,6 +69,7 @@ const Persons = ({persons, handleDelete}) => {
           key={person.id} 
           person={person} 
           handleDelete={handleDelete}
+          changeNumber={changeNumber}
         />
       )}
     </div>
@@ -134,9 +150,49 @@ const App = () => {
     }
   }
 
+  const changeNumber = (id, newNumber) => {
+    const person = persons.find(person => person.id === id)
+
+    const changedPerson = {
+      ...person,
+      number: newNumber
+    }
+
+    personService
+    .update(id, changedPerson)
+    .then(returnedPerson => {
+      setPersons(
+        persons.map(person =>
+          person.id !== id ? person : returnedPerson.data
+        )
+      )
+
+      showNotification(
+        `Changed number of ${person.name}`,
+        'success'
+      )
+    })
+    .catch(error => {
+      showNotification(
+        `Information of ${person.name} has already been removed from server`,
+        'error'
+      )
+    })
+  }
+
+  console.log(persons)
+
   const personsToShow = persons.filter(person =>
-     person.name.toLowerCase().includes(filter.toLowerCase())
+    person.name.toLowerCase().includes(filter.toLowerCase())
   )  
+
+  console.log(
+    persons.map((person, index) => ({
+      index,
+      person,
+      name: person?.name
+    }))
+  )
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -215,6 +271,7 @@ const App = () => {
       <Persons 
         persons={personsToShow}
         handleDelete={handleDelete}
+        changeNumber={changeNumber}
       />
     </div>
   )
