@@ -6,6 +6,7 @@ import Country from './Country'
 const App = () => {
     const [countries, setCountries] = useState([])
     const [search, setSearch] = useState('')
+    const [selectedCountry, setSelectedCountry] = useState(null)
 
     useEffect(() => {
         axios
@@ -17,6 +18,7 @@ const App = () => {
 
     const handleSearchChange = (event) => {
         setSearch(event.target.value)
+        setSelectedCountry(null)
     }
 
     const filteredCountries = countries.filter(country =>
@@ -27,14 +29,22 @@ const App = () => {
     return(
         <div>
             <div>
-                find countries <input value={search} onChange={handleSearchChange} />
+                find countries{' '} 
+                <input value={search} onChange={handleSearchChange} />
             </div>
 
-            {filteredCountries.length > 10 ? (
+            {selectedCountry ? (
+                <Country country={selectedCountry}/>
+            ): filteredCountries.length > 10 ? (
                 <p>Too many matches, specify another filter</p>   
             ) : filteredCountries.length > 1 ? (
                 filteredCountries.map(country => (
-                    <p key={country.cca3}>{country.name.common}</p>
+                    <p key={country.cca3}>
+                        {country.name.common}
+                        <button onClick={() => setSelectedCountry(country)}>
+                        Show
+                        </button>
+                    </p> 
                 ))
             ) : filteredCountries.length === 1 ? (
                 <Country country={filteredCountries[0]} />
