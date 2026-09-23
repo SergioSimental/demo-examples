@@ -8,6 +8,8 @@ const App = () => {
     const [search, setSearch] = useState('')
     const [selectedCountry, setSelectedCountry] = useState(null)
 
+    const api_key = import.meta.env.VITE_WEATHER_API_KEY
+
     useEffect(() => {
         axios
             .get('https://studies.cs.helsinki.fi/restcountries/api/all')
